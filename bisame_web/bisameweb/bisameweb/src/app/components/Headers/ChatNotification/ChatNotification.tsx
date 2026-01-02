@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/hooks/useAuth';
 
 interface ChatNotificationProps {
   className?: string;
@@ -20,6 +21,7 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
   const [unreadCount, setUnreadCount] = useState(3); // Mock unread count
   const [isHovered, setIsHovered] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+     const { isAuthenticated, isLoading } = useAuth();
 
   // Mock function to simulate receiving new messages
   useEffect(() => {
@@ -50,7 +52,7 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
 
   // Handle click with authentication check - following MiddleNav pattern
   const handleClick = () => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       router.push('/dashboard/chat-messages');
     } else {
       // Call the callback to show sign-in modal or handle unauthorized access
