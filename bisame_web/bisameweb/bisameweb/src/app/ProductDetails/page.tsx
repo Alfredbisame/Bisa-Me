@@ -11,7 +11,7 @@ const ProductPage = () => {
       <ProductDetail />
       <ProductInformation />
       <RelatedProducts />
-      <BottomNavigation activeTab="home" />
+      <BottomNavigation />
     </Suspense>
   );
 };
