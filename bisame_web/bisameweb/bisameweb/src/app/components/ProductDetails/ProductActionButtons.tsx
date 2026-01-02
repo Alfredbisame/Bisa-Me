@@ -139,6 +139,7 @@ const ProductActionButtons: FC<ProductActionButtonsProps> = ({
 
         {/* TRADE ASSURANCE */}
         <button
+          disabled
           onClick={handleTradeAssuranceClick}
           className="
             flex-1 px-3 py-2 rounded-lg
