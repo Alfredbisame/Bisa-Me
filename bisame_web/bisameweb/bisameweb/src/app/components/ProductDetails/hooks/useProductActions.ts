@@ -54,7 +54,6 @@ export const useProductActions = ({ product, mutate }: UseProductActionsProps) =
 
         } catch (error: any) {
             console.error("Follow error:", error);
-            toast.error(error.message || "Something went wrong");
 
             // Rollback on error
             await mutate(
@@ -95,7 +94,6 @@ export const useProductActions = ({ product, mutate }: UseProductActionsProps) =
 
         } catch (error: any) {
             console.error("Save error:", error);
-            toast.error(error.message || "Failed to update favorites");
 
             // Rollback
             await mutate(
