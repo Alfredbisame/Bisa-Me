@@ -1,0 +1,490 @@
+"use client";
+
+import Image from "next/image";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useRef } from "react";
+
+interface Category {
+  name: string;
+  imageUrl: string;
+  alt: string;
+}
+
+const categories: Category[] = [
+  {
+    name: "Computer & Laptop",
+    imageUrl: "/cat_1.png",
+    alt: "Computer & Laptop"
+  },
+  {
+    name: "SmartPhone",
+    imageUrl: "/cat_2.png",
+    alt: "SmartPhone"
+  },
+  {
+    name: "SmartPhone",
+    imageUrl: "/cat_2.png",
+    alt: "SmartPhone"
+  },
+  {
+    name: "Headphones",
+    imageUrl: "/cat_3.png",
+    alt: "Headphones"
+  },
+  {
+    name: "Headphones",
+    imageUrl: "/cat_3.png",
+    alt: "Headphones"
+  },
+  {
+    name: "Accessories",
+    imageUrl: "/cat_4.png",
+    alt: "Accessories"
+  },
+  {
+    name: "Camera & Photo",
+    imageUrl: "/cat_5.png",
+    alt: "Camera & Photo"
+  },
+  {
+    name: "Camera & Photo",
+    imageUrl: "/cat_5.png",
+    alt: "Camera & Photo"
+  },
+  {
+    name: "TV & Homes",
+    imageUrl: "/cat_6.png",
+    alt: "TV & Homes"
+  },
+  {
+    name: "TV & Homes",
+    imageUrl: "/cat_6.png",
+    alt: "TV & Homes"
+  }
+];
+
+const CategorySection = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300; 
+      const newScrollPosition = scrollContainerRef.current.scrollLeft + 
+        (direction === 'left' ? -scrollAmount : scrollAmount);
+      
+      scrollContainerRef.current.scrollTo({
+        left: newScrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+ 
+
+return (
+  <div className="w-full max-w-[1920px] mx-auto px-32 py-8">
+    <h2 className="text-center text-2xl font-bold mb-6">
+      Shop By Categories
+    </h2>
+    <div className="flex items-center justify-center space-x-4">
+      <button 
+        onClick={() => scroll('left')}
+        className="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 z-10"
+      >
+        <FaArrowLeft />
+      </button>
+      
+      <div className="overflow-hidden w-full">
+        <div 
+          ref={scrollContainerRef}
+          className="flex gap-6 overflow-x-hidden"
+          style={{
+            scrollSnapType: 'x mandatory'
+          }}
+        >
+          {categories.map((category, index) => (
+            <div 
+              key={index} 
+              className="flex-shrink-0 w-[200px] border p-4 text-center scroll-snap-align-start"
+            >
+              <Image
+                src={category.imageUrl}
+                alt={category.alt}
+                width={100}
+                height={100}
+                className="mx-auto mb-2"
+                priority={index < 2}
+              />
+              <p>{category.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button 
+        onClick={() => scroll('right')}
+        className="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 z-10"
+      >
+        <FaArrowRight />
+      </button>
+    </div>
+  </div>
+);
+
+};
+
+export default CategorySection;
+
+
+
+
+"use client";
+
+import { FC, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
+
+interface NotificationBarProps {
+  message?: string;
+}
+
+const NotificationBar: FC<NotificationBarProps> = ({ message = "NOTIFICATION BAR" }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  return (
+    <div 
+      className={`
+        flex justify-between items-center bg-black text-white p-4
+        transform transition-transform duration-300
+        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+      `}
+    >
+      <div className="text-center w-full">
+        <span className="text-lg font-bold">{message}</span>
+      </div>
+      <div className="absolute right-4">
+        <button 
+          className="text-white hover:opacity-75 transition-opacity"
+          onClick={() => setIsVisible(false)}
+          aria-label="Close notification"
+        >
+          <FaTimes size={24} color="#fff" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default NotificationBar;
+
+
+// "use client";
+
+// import Image from 'next/image';
+// import { FC, useEffect, useState } from 'react';
+// import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+// import useSWR from 'swr';
+
+// interface ProductImage {
+//   image_link: string;
+// }
+
+// interface Review {
+//   id: string;
+//   pageid: string;
+//   pageuserid: string;
+//   replyname: string;
+//   profile: string;
+//   comment: string;
+//   rating: number;
+//   reply: string;
+//   postdate: string;
+// }
+// interface Product {
+//   _id: {
+//     $oid: string;
+//   };
+//   title: string;
+//   image: ProductImage[];
+//   price: string;
+//   location: string;
+//   phone: string;
+//   userid: string;
+//   category: string;
+//   description: string;
+//   brand?: string;
+//   availability?: string;
+//   rating?: number;
+//   reviews?: number | Review[];
+// }
+
+// // Fetcher function for SWR
+// const fetcher = async (url: string) => {
+//   const response = await fetch(url);
+  
+//   if (!response.ok) {
+//     throw new Error(`HTTP error! Status: ${response.status}`);
+//   }
+  
+//   const data = await response.json();
+//   return data;
+// };
+
+// // Function to add width and height to image URL in the format /500/500
+// const getImageUrl = (imageLink: string, width = 500, height = 500) => {
+//   if (!imageLink) return '/placeholder.jpg';
+  
+//   // Replace image. with images. as in the original code
+//   let url = imageLink.replaceAll("image.", "images.");
+  
+//   // Add dimensions in the path format /width/height
+//   // First check if it already has dimensions
+//   if (!url.match(/\/\d+\/\d+$/)) {
+//     // Remove any trailing slash if present
+//     url = url.replace(/\/$/, '');
+//     // Append the dimensions
+//     url = `${url}/${width}/${height}`;
+//   }
+  
+//   return url;
+// };
+
+// const ProductDetail: FC = () => {
+//   const [productId, setProductId] = useState<string | null>(null);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
+  
+//   // Fetch all products using the same endpoint as TrendingProducts
+//   const { data: allProducts, error: allProductsError } = useSWR('/api/home', fetcher, {
+//     revalidateOnFocus: false,
+//     revalidateIfStale: false,
+//     dedupingInterval: 60000, // 1 minute
+//   });
+  
+//   useEffect(() => {
+//     // Get product ID from localStorage when component mounts
+//     const storedProductId = localStorage.getItem('selectedProductId');
+//     if (storedProductId) {
+//       setProductId(storedProductId);
+//     }
+//   }, []);
+  
+//   // Find the specific product from the fetched data
+//   const product = allProducts?.find((p: Product) => p._id?.$oid === productId) || null;
+//   const isLoading = !allProducts && !allProductsError;
+
+//   const handlePrevImage = () => {
+//     if (currentImageIndex > 0) {
+//       setCurrentImageIndex(currentImageIndex - 1);
+//     } else if (product?.image?.length) {
+//       setCurrentImageIndex(product.image.length - 1);
+//     }
+//   };
+
+//   const handleNextImage = () => {
+//     if (product?.image?.length && currentImageIndex < product.image.length - 1) {
+//       setCurrentImageIndex(currentImageIndex + 1);
+//     } else {
+//       setCurrentImageIndex(0);
+//     }
+//   };
+
+//   const handlePrevThumbnails = () => {
+//     if (thumbnailStartIndex > 0) {
+//       setThumbnailStartIndex(thumbnailStartIndex - 1);
+//     }
+//   };
+  
+//   const handleNextThumbnails = () => {
+//     if (product?.image?.length && thumbnailStartIndex < product.image.length - 6) {
+//       setThumbnailStartIndex(thumbnailStartIndex + 1);
+//     }
+//   };
+
+//   if (isLoading) {
+//     return (
+//       <div className="max-w-8xl mx-auto p-4 px-52">
+//         <div className="flex flex-col lg:flex-row">
+//           <div className="flex-1 animate-pulse bg-gray-200 h-96 rounded"></div>
+//           <div className="flex-1 mt-8 lg:mt-0 lg:ml-8">
+//             <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+//             <div className="h-10 bg-gray-200 rounded w-full mb-6"></div>
+//             <div className="space-y-3">
+//               {[...Array(4)].map((_, i) => (
+//                 <div key={i} className="h-5 bg-gray-200 rounded w-2/3"></div>
+//               ))}
+//             </div>
+//             <div className="h-8 bg-gray-200 rounded w-1/4 my-6"></div>
+//             <div className="flex space-x-4">
+//               {[...Array(3)].map((_, i) => (
+//                 <div key={i} className="h-10 bg-gray-200 rounded flex-1"></div>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+  
+//   if (allProductsError || !product) {
+//     return (
+//       <div className="max-w-8xl mx-auto p-4 px-52">
+//         <div className="text-red-500 text-center py-8">
+//           <p>{allProductsError ? 'Failed to load product details. Please try again later.' : 'Product not found'}</p>
+//           <button
+//             onClick={() => window.location.reload()}
+//             className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+//           >
+//             Try Again
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+  
+//   // Format price to remove non-numeric characters and add commas
+//   const formattedPrice = product.price && product.price !== 'N/A'
+//     ? `₵${parseInt(product.price.replace(/[^0-9]/g, '')).toLocaleString()}`
+//     : '';
+  
+//   // Get current main image with dimensions
+//   const mainImageUrl = product.image[currentImageIndex]?.image_link 
+//     ? getImageUrl(product.image[currentImageIndex].image_link, 800, 800) 
+//     : '/placeholder.jpg';
+  
+//   // Get visible thumbnails (up to 6)
+//   // If there's only one image, we'll still use it as a thumbnail
+//   const visibleThumbnails = product.image.length > 0
+//     ? product.image.slice(thumbnailStartIndex, thumbnailStartIndex + 6)
+//     : [{ image_link: mainImageUrl }];
+
+//     // Handle reviews count - check if it's an array or a number
+//   const reviewsCount = typeof product.reviews === 'number' 
+//   ? product.reviews 
+//   : Array.isArray(product.reviews) 
+//     ? product.reviews.length 
+//     : 0;
+  
+//   return (
+//     <div className="max-w-8xl mx-auto p-4 px-52">
+//       <div className="flex flex-col lg:flex-row">
+//         {/* Product Image Section */}
+//         <div className="flex-1 flex flex-col items-center">
+//           <div className="relative w-full max-w-lg border rounded-sm overflow-hidden">
+//             <div className="aspect-w-12 aspect-h-4 relative" style={{ height: '400px' }}>
+//               <Image
+//                 src={mainImageUrl}
+//                 alt={product.title}
+//                 fill
+//                 className="object-contain rounded-sm"
+//                 onError={(e) => {
+//                   (e.target as HTMLImageElement).src = '/placeholder.jpg';
+//                 }}
+//               />
+//             </div>
+//           </div>
+          
+//           {/* Always show the thumbnail container, even with one image */}
+//           <div className="relative flex mt-6 p-2 border rounded-sm w-full max-w-lg">
+//             <button
+//               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 p-2 border border-orange-400
+//                         rounded-full bg-orange-500 text-white z-10
+//                         hover:bg-orange-600 hover:scale-110
+//                         active:bg-orange-700 active:scale-95
+//                         transition-all duration-200 shadow-md hover:shadow-lg
+//                         focus:outline-none focus:ring-2 focus:ring-orange-300"
+//               onClick={handlePrevImage}
+//               aria-label="Previous image"
+//               disabled={product.image.length <= 1}
+//               style={{ opacity: product.image.length <= 1 ? 0.5 : 1 }}
+//             >
+//               <FaArrowLeft />
+//             </button>
+            
+//             <div className="flex justify-between space-x-2 mx-auto">
+//               {visibleThumbnails.map((img: ProductImage, index: number) => (
+//                 <div
+//                   key={index}
+//                   className={`w-16 h-16 border rounded-sm cursor-pointer transition-all overflow-hidden
+//                     ${index + thumbnailStartIndex === currentImageIndex || product.image.length === 1
+//                       ? 'border-orange-500 ring-1 ring-orange-500'
+//                       : 'border-gray-300 hover:border-orange-500'}`}
+//                   onClick={() => setCurrentImageIndex(index + thumbnailStartIndex)}
+//                 >
+//                   <Image
+//                     src={img.image_link ? getImageUrl(img.image_link, 100, 100) : '/placeholder.jpg'}
+//                     alt={`Thumbnail ${index + 1}`}
+//                     width={100}
+//                     height={100}
+//                     className="w-full h-full object-contain"
+//                     onError={(e) => {
+//                       (e.target as HTMLImageElement).src = '/placeholder.jpg';
+//                     }}
+//                   />
+//                 </div>
+//               ))}
+//             </div>
+            
+//             <button
+//               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 p-2 border border-orange-400
+//                        rounded-full bg-orange-500 text-white z-10
+//                        hover:bg-orange-600 hover:scale-110
+//                        active:bg-orange-700 active:scale-95
+//                        transition-all duration-200 shadow-md hover:shadow-lg
+//                        focus:outline-none focus:ring-2 focus:ring-orange-300"
+//               onClick={handleNextImage}
+//               aria-label="Next image"
+//               disabled={product.image.length <= 1}
+//               style={{ opacity: product.image.length <= 1 ? 0.5 : 1 }}
+//             >
+//               <FaArrowRight />
+//             </button>
+//           </div>
+//         </div>
+        
+//         {/* Product Details Section */}
+//         <div className="flex-1 mt-8 lg:mt-0 lg:ml-8">
+//            <div className="text-xl font-semibold">
+//             <span className="text-orange-500">{product.rating || '4.5'} Star Rating</span>
+//             <span className="ml-2">({reviewsCount} User feedback)</span>
+//           </div>
+          
+//           <h1 className="text-2xl font-bold mt-2">
+//             {product.title}
+//           </h1>
+          
+//           <div className="mt-6 space-y-3">
+//             {[
+//               { label: 'Brand', value: product.brand || 'Not specified' },
+//               { label: 'Availability', value: product.availability || 'In Stock', isGreen: true },
+//               { label: 'Category', value: product.category || 'Not specified' },
+//               { label: 'Location', value: product.location || 'Not specified' }
+//             ].map((item, index) => (
+//               <p key={index} className="flex items-center">
+//                 <span className="font-bold min-w-[100px]">{item.label}:</span>
+//                 <span className={item.isGreen ? 'text-green-500' : ''}>
+//                   {item.value}
+//                 </span>
+//               </p>
+//             ))}
+//           </div>
+          
+//           <div className="text-3xl font-bold text-blue-600 mt-6">{formattedPrice}</div>
+          
+//           <div className="flex mt-6 space-x-4">
+//             <button className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition-colors flex-1">
+//               CHAT
+//             </button>
+//             <button className="border-2 border-orange-500 text-orange-500 px-6 py-2 rounded hover:bg-orange-50 transition-colors flex-1">
+//               CALL NOW
+//             </button>
+//             <button className="bg-blue-800 text-white px-6 py-2 rounded hover:bg-blue-900 transition-colors flex-1">
+//               Bisame Trade Assurance
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetail;
+

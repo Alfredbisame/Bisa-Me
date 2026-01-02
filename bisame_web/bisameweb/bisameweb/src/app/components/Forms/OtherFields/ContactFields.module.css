@@ -1,0 +1,77 @@
+/* Custom styles for PhoneInput to match existing design */
+.phoneInput {
+    position: relative;
+    max-width: 300px; /* Limit the maximum width */
+    width: 100%;
+  }
+  
+  .phoneInput :global(.PhoneInput) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #93c5fd; /* border-blue-300 */
+    border-radius: 0.5rem; /* rounded-lg */
+    background-color: rgba(239, 246, 255, 0.3); /* bg-blue-50/30 */
+    transition: all 0.2s;
+  }
+  
+  .phoneInput :global(.PhoneInput:hover) {
+    background-color: rgba(219, 234, 254, 0.5); /* hover:bg-blue-100/50 */
+  }
+  
+  .phoneInput :global(.PhoneInput:focus-within) {
+    outline: none;
+    border-color: #fb923c; /* focus:border-orange-400 */
+    box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.2); /* focus:ring-2 focus:ring-orange-400 */
+  }
+  
+  .phoneInput :global(.PhoneInputCountry) {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem; /* Reduced padding for more compact look */
+    border-right: 1px solid #d1d5db;
+    background: transparent;
+  }
+  
+  .phoneInput :global(.PhoneInputCountrySelect) {
+    background: transparent;
+    border: none;
+    font-size: 0.875rem; /* text-sm */
+    color: #1d4ed8; /* text-blue-700 */
+    font-weight: 500; /* font-medium */
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+  }
+  
+  .phoneInput :global(.PhoneInputCountrySelect:focus) {
+    outline: none;
+    background-color: rgba(251, 146, 60, 0.1);
+  }
+  
+  .phoneInput :global(.PhoneInputCountryIcon) {
+    width: 1.25rem; /* Slightly smaller flag */
+    height: 0.875rem;
+    margin-right: 0.25rem; /* Reduced margin */
+    border-radius: 0.125rem;
+  }
+  
+  .phoneInput :global(.PhoneInputInput) {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.5rem 0.75rem; /* Reduced padding for more compact look */
+    font-size: 0.875rem; /* Slightly smaller font */
+    color: #1d4ed8; /* text-blue-700 */
+    font-weight: 500; /* font-medium */
+    outline: none;
+  }
+  
+  .phoneInput :global(.PhoneInputInput::placeholder) {
+    color: #6b7280; /* text-gray-500 */
+    font-weight: 400;
+  }
+  
+  .phoneInput :global(.PhoneInputInput:focus) {
+    outline: none;
+  }

@@ -1,0 +1,1 @@
+export { useSearchData } from './useSearchData';
