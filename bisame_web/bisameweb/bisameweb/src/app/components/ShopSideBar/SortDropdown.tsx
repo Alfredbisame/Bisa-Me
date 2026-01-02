@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
 
 interface SortOption {
   value: string;
@@ -33,9 +32,9 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ onSort }) => {
         <select
           value={selectedSort}
           onChange={(e) => handleSortChange(e.target.value)}
-          className="block w-full text-sm md:text-base appearance-none bg-white
+          className="block w-full text-sm md:text-base bg-white
                    border border-gray-300 text-gray-700
-                   py-2 px-4 pr-4 rounded-sm leading-tight
+                   p-2 rounded-sm 
                    cursor-pointer hover:border-orange-500
                    focus:outline-none focus:ring-1
                    focus:ring-orange-500 focus:border-orange-500
@@ -47,10 +46,6 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ onSort }) => {
             </option>
           ))}
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0
-                      flex items-center px-2 text-gray-700">
-          <FaChevronDown className="w-2 h-2 md:w-4 md:h-4" />
-        </div>
       </div>
     </div>
   );
