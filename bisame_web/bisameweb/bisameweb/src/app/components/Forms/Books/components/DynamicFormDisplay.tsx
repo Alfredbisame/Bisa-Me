@@ -9,7 +9,7 @@ interface DynamicFormDisplayProps {
   attributes?: Record<string, string>;
   formData: Record<string, string | string[] | (string | string[])[]>;
   handleInputChange: (field: string, value: string) => void;
-  handleCheckboxInputChange: (field: string, value: string[]) => void;
+  handleCheckboxInputChange?: (field: string, value: string[]) => void;
 }
 const DynamicFormDisplay: React.FC<DynamicFormDisplayProps> = ({
   data,
@@ -79,7 +79,12 @@ const DynamicFormDisplay: React.FC<DynamicFormDisplayProps> = ({
                     options={options}
                     inputName={name}
                     value={formData[name] as string[]}
-                    handleCheckboxInputChange={handleCheckboxInputChange}
+                    handleCheckboxInputChange={
+                      handleCheckboxInputChange as (
+                        field: string,
+                        value: string[]
+                      ) => void
+                    }
                     key={placeholder}
                   />
                 );
