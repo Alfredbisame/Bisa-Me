@@ -4,9 +4,10 @@ import type React from "react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Camera, Info, X, Upload, GripVertical, Loader2 } from "lucide-react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useFormContext } from "../Forms/Foods/context/FormContext";
 import { useProfileData } from "../Dashboard/useProfileData";
+import { buildProfileUrl, FILE_ENDPOINTS, httpClient } from "@/lib";
 
 interface UploadedImage {
   id: string;
@@ -65,16 +66,16 @@ const PhotoUploadSection = ({
         formData.append("file", file);
       }
 
-      const response = await axios.post(
-        `/api/UploadImage?name=${encodeURIComponent(fullName || "user")}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Accept: "*/*",
-          },
-        }
-      );
+      const apiUrl = buildProfileUrl(FILE_ENDPOINTS.upload);
+
+      const response: AxiosResponse = await httpClient.post(apiUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "*/*",
+        },
+      });
+
+  
 
       let uploadedImageUrls: string[] = [];
 
@@ -84,15 +85,12 @@ const PhotoUploadSection = ({
         ? (existingImages as string[])
         : [];
 
-      if (Array.isArray(response.data.data)) {
-        uploadedImageUrls = [...existingArray, ...response.data.data];
+      if (Array.isArray(response.data)) {
+        uploadedImageUrls = [...existingArray, ...response.data];
       } else {
-        uploadedImageUrls = [...existingArray, response.data.data];
+        uploadedImageUrls = [...existingArray, response.data];
       }
 
-      console.log({ images: uploadedImageUrls });
-      console.log({ images: uploadedImageUrls });
-      console.log({ images: uploadedImageUrls });
       console.log({ images: uploadedImageUrls });
 
       // Update context with uploaded image URLs
