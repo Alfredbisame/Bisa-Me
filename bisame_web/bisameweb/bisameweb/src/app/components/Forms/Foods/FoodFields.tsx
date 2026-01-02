@@ -6,7 +6,7 @@ interface BookFieldsProps {
   data: FormOptions[];
   formData: Record<string, string | string[] | (string | string[])[]>;
   handleInputChange: (field: string, value: string | string[]) => void;
-  handleCheckboxInputChange: (field: string, value: string[]) => void;
+  handleCheckboxInputChange?: (field: string, value: string[]) => void;
 }
 
 const FoodFields: React.FC<BookFieldsProps> = ({
