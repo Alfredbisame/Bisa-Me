@@ -122,7 +122,12 @@ export const useSignUpForm = () => {
         }
       },
       onError: (err: any) => {
-        console.error("Registration failed:", err.message);
+        console.error("Registration failed:", + err);
+
+        console.log(err);
+        console.log(err);
+        console.log(err);
+        console.log(err);
 
         const errorMessage =
           err.message || "Registration failed. Please try again.";
@@ -148,6 +153,7 @@ export const useSignUpForm = () => {
         confirmPassword: formState.confirmPassword,
         termsAccepted: formState.termsAccepted,
       };
+
 
       // Validate form data
       const validation = validateSignUpForm(formData);
