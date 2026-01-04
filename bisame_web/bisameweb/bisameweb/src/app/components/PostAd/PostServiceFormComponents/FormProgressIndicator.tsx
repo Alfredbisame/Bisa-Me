@@ -12,7 +12,7 @@ const FormProgressIndicator = ({
   getProgressPercentage 
 }: FormProgressIndicatorProps) => {
   return (
-    <div className="mt-6 pt-6 border-t border-gray-100">
+    <div>
       <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
         <span>Progress</span>
         <span>{getProgressPercentage()}%</span>

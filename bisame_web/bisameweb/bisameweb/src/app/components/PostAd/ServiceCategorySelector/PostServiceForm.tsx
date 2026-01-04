@@ -60,16 +60,41 @@ export const PostServiceFormContent: React.FC<PostServiceFormProps> = ({
   });
 
   const isFormValid = React.useMemo(
-    () => Boolean(selectedService && selectedLocation && images.length > 0),
+    () =>
+      Boolean(
+        selectedService?.category &&
+          selectedService.subcategory &&
+          selectedLocation.city &&
+          selectedLocation.region &&
+          images.length > 2
+      ),
     [selectedService, selectedLocation, images.length]
   );
 
   const getProgressPercentage = React.useCallback(() => {
     let progress = 0;
-    if (selectedService) progress += 33;
-    if (selectedLocation) progress += 33;
-    if (images.length > 0) progress += 17;
-    if (images.length > 2) progress += 17;
+    if (selectedService?.category && selectedService.subcategory) {
+      console.log("selectedServices: " + JSON.stringify(selectedService));
+      progress += 33;
+      console.log(progress);
+    }
+    if (selectedLocation.city && selectedLocation.region) {
+      console.log("selectedLocation: " + JSON.stringify(selectedLocation.city));
+      progress += 33;
+      console.log(progress);
+    }
+    if (images.length > 0) {
+      console.log("images.length > 0: " + (images.length > 0));
+      progress += 17;
+      console.log(progress);
+    }
+    if (images.length > 2) {
+      console.log("images.length > 2: " + (images.length > 2));
+      progress += 17;
+      console.log(progress);
+    }
+
+    console.log(progress);
     return progress;
   }, [selectedService, selectedLocation, images.length]);
 
@@ -87,6 +112,16 @@ export const PostServiceFormContent: React.FC<PostServiceFormProps> = ({
       />
       <main className="bg-white shadow-sm p-4 md:p-8 mx-4 mb-8">
         <div className="flex flex-col space-y-6">
+          <FormProgressIndicator
+            selectedCategory={
+              selectedService
+                ? `${selectedService.category} > ${selectedService.subcategory} > ${selectedService.childcategory}`
+                : ""
+            }
+            selectedLocation={selectedLocation.city}
+            imagesCount={images.length}
+            getProgressPercentage={getProgressPercentage}
+          />
           {group ? handleGroupInput(group, props) : null}
           <PhotoUploadSection
             onImagesChange={handleImagesChange}
@@ -110,16 +145,6 @@ export const PostServiceFormContent: React.FC<PostServiceFormProps> = ({
                 });
               }
             }}
-          />
-          <FormProgressIndicator
-            selectedCategory={
-              selectedService
-                ? `${selectedService.category} > ${selectedService.subcategory} > ${selectedService.childcategory}`
-                : ""
-            }
-            selectedLocation={selectedLocation.city}
-            imagesCount={images.length}
-            getProgressPercentage={getProgressPercentage}
           />
         </div>
         <FormSummary
