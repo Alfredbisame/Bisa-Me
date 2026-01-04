@@ -206,7 +206,7 @@ export default function SearchSuggestions({
   return (
     <div 
       ref={suggestionsRef} 
-      className={`absolute top-full left-0 right-0 mt-3 bg-white/95 backdrop-blur-lg border border-gray-200/50 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-200 ${className}`}
+      className={`absolute hidden top-full left-0 right-0 mt-3 bg-white/95 backdrop-blur-lg border border-gray-200/50 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-200 ${className}`}
       style={{
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)'
       }}
@@ -223,6 +223,7 @@ export default function SearchSuggestions({
 
       {/* Error State */}
       {error && (
+        
         <div className="p-6 text-center">
           <div className="text-red-500 mb-2">
             <HiOutlineSparkles className="w-6 h-6 mx-auto" />

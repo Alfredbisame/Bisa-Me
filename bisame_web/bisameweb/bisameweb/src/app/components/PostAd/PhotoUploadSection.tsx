@@ -66,7 +66,11 @@ const PhotoUploadSection = ({
         formData.append("file", file);
       }
 
+      console.log(formData)
+
       const apiUrl = buildProfileUrl(FILE_ENDPOINTS.upload);
+
+      console.log(apiUrl)
 
       const response: AxiosResponse = await httpClient.post(apiUrl, formData, {
         headers: {
@@ -74,8 +78,6 @@ const PhotoUploadSection = ({
           Accept: "*/*",
         },
       });
-
-  
 
       let uploadedImageUrls: string[] = [];
 
@@ -150,20 +152,28 @@ const PhotoUploadSection = ({
       setTimeout(() => setUploadError(""), 5000);
     }
 
-    // Create image objects for preview
-    const newImages: UploadedImage[] = filesToAdd.map((file, index) => ({
-      id: `${Date.now()}-${index}-${Math.random().toString(36).substr(2, 9)}`,
-      file,
-      preview: URL.createObjectURL(file),
-      isMain: images.length === 0 && index === 0, // First image is main
-    }));
+    // Upload to server FIRST
+    const uploadSuccess = await uploadImageToServer(filesToAdd);
 
-    const updatedImages = [...images, ...newImages];
-    setImages(updatedImages);
-    notifyImagesChange(updatedImages);
+    // Only create preview images if upload was successful
+    if (uploadSuccess) {
+      const newImages: UploadedImage[] = filesToAdd.map((file, index) => ({
+        id: `${Date.now()}-${index}-${Math.random().toString(36).substr(2, 9)}`,
+        file,
+        preview: URL.createObjectURL(file),
+        isMain: images.length === 0 && index === 0, // First image is main
+      }));
 
-    // Upload to server
-    await uploadImageToServer(filesToAdd);
+      const updatedImages = [...images, ...newImages];
+      setImages(updatedImages);
+      notifyImagesChange(updatedImages);
+    } else {
+      // Upload failed - clean up any object URLs that might have been created
+      filesToAdd.forEach((file) => {
+        const preview = URL.createObjectURL(file);
+        URL.revokeObjectURL(preview);
+      });
+    }
   };
 
   // Handle drag and drop for file upload
@@ -200,9 +210,6 @@ const PhotoUploadSection = ({
       );
     }
 
-    console.log({ images: updatedImageUrls });
-    console.log({ images: updatedImageUrls });
-    console.log({ images: updatedImageUrls });
     console.log({ images: updatedImageUrls });
 
     handleFormData({ images: updatedImageUrls });

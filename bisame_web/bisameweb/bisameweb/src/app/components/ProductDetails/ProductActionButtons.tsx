@@ -110,6 +110,7 @@ const ProductActionButtons: FC<ProductActionButtonsProps> = ({
                 className={`
                 absolute inset-0 flex items-center justify-center
                 transition-all duration-500
+                text-xs md:text-base
                 ${
                   showPhoneNumber
                     ? "opacity-100 translate-y-0"
@@ -123,7 +124,7 @@ const ProductActionButtons: FC<ProductActionButtonsProps> = ({
               <span
                 className={`
                 absolute inset-0 flex items-center justify-center
-                transition-all duration-500
+                transition-all duration-500 
                 ${
                   showPhoneNumber
                     ? "opacity-0 -translate-y-2"
@@ -139,6 +140,7 @@ const ProductActionButtons: FC<ProductActionButtonsProps> = ({
 
         {/* TRADE ASSURANCE */}
         <button
+          disabled
           onClick={handleTradeAssuranceClick}
           className="
             flex-1 px-3 py-2 rounded-lg

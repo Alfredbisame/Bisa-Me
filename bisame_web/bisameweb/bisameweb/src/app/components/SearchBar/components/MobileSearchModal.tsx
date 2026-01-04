@@ -240,7 +240,7 @@ const MobileSearchModal: React.FC<MobileSearchModalProps> = ({
 
             {/* Search Suggestions */}
             {isSuggestionsVisible && searchTerm && (
-              <div className="mt-4">
+              <div className="mt-4 hidden">
                 <SearchSuggestions
                   query={searchTerm}
                   isVisible={isSuggestionsVisible}

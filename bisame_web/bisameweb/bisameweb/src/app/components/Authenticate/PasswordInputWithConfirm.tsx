@@ -38,7 +38,7 @@ const PasswordInputWithConfirm: React.FC<PasswordInputWithConfirmProps> = ({
           id="password"
           value={password}
           onChange={onPasswordChange}
-          className="appearance-none bg-transparent text-sm border-none w-full text-blue-600 leading-tight focus:outline-none"
+          className="appearance-none bg-transparent text-sm border-none w-full leading-tight focus:outline-none"
           placeholder="8+ characters"
           disabled={disabled}
         />

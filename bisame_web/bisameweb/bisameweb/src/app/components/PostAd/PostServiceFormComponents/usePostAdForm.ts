@@ -73,7 +73,7 @@ export const usePostServiceForm = (callbacks: PostServiceFormCallbacks) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedService && selectedLocation && images.length > 0) {
+    if (selectedService && selectedLocation && images.length >= 3) {
       setIsSubmitting(true);
       try {
         await callbacks.onSubmit?.({

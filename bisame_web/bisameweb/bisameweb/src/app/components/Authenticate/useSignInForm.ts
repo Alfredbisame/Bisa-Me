@@ -28,7 +28,10 @@ interface LoginResponse {
 }
 
 // Function to handle login API call using new httpClient
-async function loginUser(url: string, { arg }: { arg: LoginRequest }): Promise<LoginResponse> {
+async function loginUser(
+  url: string,
+  { arg }: { arg: LoginRequest }
+): Promise<LoginResponse> {
   const apiUrl = buildAuthUrl(AUTH_ENDPOINTS.login);
 
   return httpClient.post<LoginResponse>(apiUrl, {
@@ -80,7 +83,7 @@ export const useSignInForm = (onLoginSuccess?: () => void) => {
           // Show success message from API response
           toast.success(
             data.message ||
-            "Successfully logged in! Please verify your account."
+              "Successfully logged in! Please verify your account."
           );
 
           // Dispatch custom event to notify other components
@@ -107,6 +110,13 @@ export const useSignInForm = (onLoginSuccess?: () => void) => {
         // Error already handled by httpClient with toast
         // Just log additional details if needed
         const errorMessage = error.message || "An unexpected error occurred.";
+
+        if (error.status == 401) {
+          // Incorrect credentials
+          toast.error(
+            "Incorrect phone number or password"
+          );
+        }
 
         if (!error.status) {
           // Network error

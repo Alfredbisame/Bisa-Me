@@ -12,6 +12,7 @@ import ConditionalNavigation from "./components/Layout/ConditionalNavigation";
 import { SWRProvider } from "./api/auth/swrConfig";
 import FormContext from "./components/Forms/Foods/context/FormContext";
 import { AuthProvider } from "@/lib/context/AuthProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
+          <SpeedInsights />
           <NotificationBar />
           <ConditionalNavigation>
             <TopNav />

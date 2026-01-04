@@ -23,21 +23,10 @@ const KeyProductDropdown: React.FC<KeyServiceDropdownProps> = ({
   // selectedService = null, // unused variable
 }) => {
   const SearchParams = useSearchParams();
-  const categoryParams = category ?? (SearchParams.get("category"))
-  const subCategoryParams = subCategory ?? (SearchParams.get("subCategory"))
+  const categoryParams = category ?? SearchParams.get("category");
+  const subCategoryParams = subCategory ?? SearchParams.get("subCategory");
   // const category = SearchParams.get("category") as string;
   // const subCategory = SearchParams.get("subCategory") as string;
-
-  console.log(category)
-  console.log(category)
-  console.log(category)
-  console.log(category)
-
-  console.log(subCategory)
-  console.log(subCategory)
-  console.log(subCategory)
-  console.log(subCategory)
-  console.log(subCategory)
 
   const { data, error, isLoading } = useFetchServiceOptions({
     category: categoryParams,
@@ -206,25 +195,22 @@ const KeyProductDropdown: React.FC<KeyServiceDropdownProps> = ({
           } ${disabled ? "text-blue-300" : "text-[#6b8ba6]"}`}
         />
       </button>
-      {data && data?.length > 0 && (
+      {data && data?.length > 0 && openDropdown && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-blue-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
-          {openDropdown &&
-            data.map((service: string) => (
-              <label
-                key={service}
-                className="flex items-center px-4 py-2 hover:bg-orange-50 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  checked={
-                    selectedServices && selectedServices.includes(service)
-                  }
-                  onChange={() => handleServiceToggle(service)}
-                  className="mr-2 accent-orange-500"
-                />
-                <span className="text-[#6b8ba6]">{service}</span>
-              </label>
-            ))}
+          {data.map((service: string) => (
+            <label
+              key={service}
+              className="flex items-center px-4 py-2 hover:bg-orange-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                checked={selectedServices && selectedServices.includes(service)}
+                onChange={() => handleServiceToggle(service)}
+                className="mr-2 accent-orange-500"
+              />
+              <span className="text-[#6b8ba6]">{service}</span>
+            </label>
+          ))}
         </div>
       )}
     </div>
